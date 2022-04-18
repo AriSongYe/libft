@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 16:26:53 by yecsong           #+#    #+#             */
-/*   Updated: 2022/04/18 15:16:10 by yecsong          ###   ########.fr       */
+/*   Created: 2022/04/01 14:49:32 by yecsong           #+#    #+#             */
+/*   Updated: 2022/04/01 16:13:05 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_toupper(int c)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	if (c >= 97 && c <= 122)
-		c = c - 32;
-	return (c);
+	t_list	*temp;
+
+	if (!lst || !f)
+		return (NULL);
+	temp = ft_lstnew(f(lst->content));
+	if (!temp)
+	{
+		ft_lstclear(&temp, del);
+		return (NULL);
+	}
+	temp->next = ft_lstmap(lst->next, f, del);
+	return (temp);
 }

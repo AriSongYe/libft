@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 16:26:53 by yecsong           #+#    #+#             */
-/*   Updated: 2022/04/18 15:16:10 by yecsong          ###   ########.fr       */
+/*   Created: 2022/04/01 13:22:06 by yecsong           #+#    #+#             */
+/*   Updated: 2022/04/01 16:26:20 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_toupper(int c)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	if (c >= 97 && c <= 122)
-		c = c - 32;
-	return (c);
+	t_list	*temp;
+
+	temp = ft_lstlast(*lst);
+	if (!temp)
+		*lst = new;
+	else
+		temp->next = new;
 }

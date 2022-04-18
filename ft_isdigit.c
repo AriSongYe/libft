@@ -6,11 +6,11 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:47:15 by yecsong           #+#    #+#             */
-/*   Updated: 2022/03/18 12:00:16 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/04/18 15:06:16 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
 int	ft_isdigit(int c)
 {

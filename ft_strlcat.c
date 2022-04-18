@@ -6,7 +6,7 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 16:11:33 by yecsong           #+#    #+#             */
-/*   Updated: 2022/03/18 12:05:48 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/03/29 17:37:50 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	i = 0;
 	dst_len = ft_strlen(dst);
 	src_len = ft_strlen(src);
-	if (dstsize < dst_len)
+	if (dstsize <= dst_len)
 		return (src_len + dstsize);
 	else
 	{
-		while (src[i] != '\0' && dst_len + src_len < dstsize - 1)
+		while (src[i] != '\0' && i + dst_len < dstsize - 1)
 		{
 			dst[dst_len + i] = src[i];
 			i++;
 		}
 		dst[dst_len + i] = '\0';
-		return (dstsize + src_len);
+		return (dst_len + src_len);
 	}
 }

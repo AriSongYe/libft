@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 16:26:53 by yecsong           #+#    #+#             */
-/*   Updated: 2022/04/18 15:16:10 by yecsong          ###   ########.fr       */
+/*   Created: 2022/03/26 10:16:01 by yecsong           #+#    #+#             */
+/*   Updated: 2022/03/29 16:14:14 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_toupper(int c)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	if (c >= 97 && c <= 122)
-		c = c - 32;
-	return (c);
+	char			*ptr;
+	unsigned int	i;
+
+	i = 0;
+	if (s == NULL)
+		return (NULL);
+	(ptr = (char *)malloc(sizeof(char) * ft_strlen(s) + 1));
+	if (!(ptr))
+		return (NULL);
+	ptr[ft_strlen(s)] = '\0';
+	while (s[i])
+	{
+		ptr[i] = (*f)(i, s[i]);
+		i++;
+	}
+	return (ptr);
 }

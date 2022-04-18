@@ -1,20 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 16:26:53 by yecsong           #+#    #+#             */
-/*   Updated: 2022/04/18 15:16:10 by yecsong          ###   ########.fr       */
+/*   Created: 2022/03/26 11:55:34 by yecsong           #+#    #+#             */
+/*   Updated: 2022/03/30 14:57:47 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_toupper(int c)
+void	recur_put(int n, int fd);
+
+void	ft_putnbr_fd(int n, int fd)
 {
-	if (c >= 97 && c <= 122)
-		c = c - 32;
-	return (c);
+	int	i;
+
+	i = 0;
+	if (n == 0)
+		ft_putchar_fd('0', fd);
+	else if (n < 0)
+		ft_putchar_fd('-', fd);
+	recur_put(n, fd);
+}
+
+void	recur_put(int n, int fd)
+{
+	int	temp;
+
+	if (n != 0)
+	{
+		temp = n % 10;
+		recur_put(n / 10, fd);
+		if (temp >= 0)
+			ft_putchar_fd('0' + temp, fd);
+		else if (temp < 0)
+			ft_putchar_fd((temp * -1) + '0', fd);
+	}
 }
