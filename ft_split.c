@@ -6,16 +6,16 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 13:58:23 by yecsong           #+#    #+#             */
-/*   Updated: 2022/03/30 16:50:43 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/04/19 12:08:19 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	count_section(char const *s, char c);
-void	fill_word(char **ptr, char const *s, char c, size_t i);
-char	**malloc_error(char **ptr);
-char	**count_word(char **ptr, char const *s, char c, size_t i);
+static size_t	count_section(char const *s, char c);
+static void		fill_word(char **ptr, char const *s, char c, size_t i);
+static char		**malloc_error(char **ptr);
+static char		**count_word(char **ptr, char const *s, char c, size_t i);
 
 char	**ft_split(char const *s, char c)
 {
@@ -32,7 +32,7 @@ char	**ft_split(char const *s, char c)
 	return (ptr);
 }
 
-char	**malloc_error(char **ptr)
+static char	**malloc_error(char **ptr)
 {
 	size_t	i;
 
@@ -46,7 +46,7 @@ char	**malloc_error(char **ptr)
 	return (NULL);
 }
 
-void	fill_word(char **ptr, char const *s, char c, size_t i)
+static void	fill_word(char **ptr, char const *s, char c, size_t i)
 {
 	size_t	j;
 	size_t	k;
@@ -72,7 +72,7 @@ void	fill_word(char **ptr, char const *s, char c, size_t i)
 	ptr[j] = NULL;
 }
 
-size_t	count_section(char const *s, char c)
+static size_t	count_section(char const *s, char c)
 {
 	size_t	i;
 	size_t	cnt;
@@ -93,7 +93,7 @@ size_t	count_section(char const *s, char c)
 	return (cnt);
 }
 
-char	**count_word(char **ptr, char const *s, char c, size_t i)
+static char	**count_word(char **ptr, char const *s, char c, size_t i)
 {
 	size_t	j;
 	size_t	word_cnt;

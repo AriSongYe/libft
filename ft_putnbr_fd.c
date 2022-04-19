@@ -6,13 +6,13 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 11:55:34 by yecsong           #+#    #+#             */
-/*   Updated: 2022/03/30 14:57:47 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/04/19 12:07:20 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	recur_put(int n, int fd);
+static void	recur_put(int n, int fd);
 
 void	ft_putnbr_fd(int n, int fd)
 {
@@ -26,7 +26,7 @@ void	ft_putnbr_fd(int n, int fd)
 	recur_put(n, fd);
 }
 
-void	recur_put(int n, int fd)
+static void	recur_put(int n, int fd)
 {
 	int	temp;
 

@@ -6,13 +6,13 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 16:49:59 by yecsong           #+#    #+#             */
-/*   Updated: 2022/04/14 13:10:34 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/04/19 12:06:52 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	assign_n(char *ptr, int i, int n);
+static void	assign_n(char *ptr, int i, int n);
 
 char	*ft_itoa(int n)
 {
@@ -43,7 +43,7 @@ char	*ft_itoa(int n)
 	return (ptr);
 }
 
-void	assign_n(char *ptr, int i, int n)
+static void	assign_n(char *ptr, int i, int n)
 {
 	while (--i >= 0 && n != 0)
 	{
