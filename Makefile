@@ -6,7 +6,7 @@
 #    By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 11:39:28 by yecsong           #+#    #+#              #
-#    Updated: 2022/04/19 14:00:34 by yecsong          ###   ########.fr        #
+#    Updated: 2022/05/16 14:49:30 by yecsong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ AR := ar
 
 ARFLAGS := src
 
-CC := gcc
+CC := cc
 
 CFLAGS := -Werror -Wextra -Wall
 
