@@ -6,7 +6,7 @@
 #    By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 11:39:28 by yecsong           #+#    #+#              #
-#    Updated: 2022/05/16 14:49:30 by yecsong          ###   ########.fr        #
+#    Updated: 2022/05/18 14:06:21 by yecsong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,9 @@ $(NAME) : $(OBJS_FILES)
 bonus :
 	make BONUS_CHECK=1 all
 
-re : fclean all
+re :
+	make fclean
+	make all
 
 clean :
 	rm -f *.o
