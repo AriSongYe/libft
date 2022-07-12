@@ -6,7 +6,7 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 13:40:40 by yecsong           #+#    #+#             */
-/*   Updated: 2022/07/11 16:18:19 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/07/12 14:41:15 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,30 @@ void	init_flags(t_flag *flags)
 	flags->plus = 0;
 	flags->nbr_base = 10;
 	flags->type = '\0';
+}
+
+char	*ft_baseset(t_flag *flags)
+{
+	if (flags->type == 'u' || flags->type == 'd' || flags->type == 'i')
+		return ("0123456789");
+	else if (flags->type == 'x' || flags->type == 'p')
+		return ("0123456789abcdef");
+	else if (flags->type == 'X')
+		return ("0123456789ABCDEF");
+	return (0);
+}
+
+int	ft_nbrlen(unsigned long long num, t_flag *flags)
+{
+	int	i;
+
+	i = 0;
+	if (num == 0)
+		return (1);
+	while (num)
+	{
+		num /= flags->nbr_base;
+		i++;
+	}
+	return (i);
 }

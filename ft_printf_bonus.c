@@ -6,12 +6,11 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 13:32:25 by yecsong           #+#    #+#             */
-/*   Updated: 2022/07/11 21:09:26 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/07/12 14:57:55 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_bonus.h"
-#include <stdio.h> 
 
 void	check_flag(char sign, t_flag *flags)
 {
@@ -54,7 +53,6 @@ void	print_type(va_list ap, t_flag *flags, int *cnt)
 		print_nbr(va_arg(ap, unsigned int), flags, cnt);
 	else if (flags->type == 'p')
 		print_nbr(va_arg(ap, unsigned long long), flags, cnt);
-	
 }
 
 int	parse_format(va_list ap, const char *format, int *cnt)
@@ -68,14 +66,14 @@ int	parse_format(va_list ap, const char *format, int *cnt)
 		return (0);
 	while (format[i] != '\0')
 	{
-		while (format[i] &&format[i] != '%')
+		while (format[i] && format[i] != '%')
 			ft_putchar(format[i++], cnt);
 		if (format[i] == '%')
 		{
 			init_flags(flags);
 			while (format[++i] && !ft_strchr(TYPE, format[i]))
 				check_flag(format[i], flags);
-			flags->type= format[i++];
+			flags->type = format[i++];
 			print_type(ap, flags, cnt);
 		}
 	}
@@ -85,14 +83,14 @@ int	parse_format(va_list ap, const char *format, int *cnt)
 
 int	ft_printf(const char *format, ...)
 {
-	va_list ap;
+	va_list	ap;
 	int		cnt;
 
 	cnt = 0;
 	if (!format)
 		return (-1);
 	va_start(ap, format);
-	if(!parse_format(ap, format, &cnt))
+	if (!parse_format(ap, format, &cnt))
 		return (-1);
 	va_end(ap);
 	return (cnt);

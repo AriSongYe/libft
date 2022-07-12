@@ -6,23 +6,23 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:08:17 by yecsong           #+#    #+#             */
-/*   Updated: 2022/07/11 11:38:12 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/07/12 14:58:34 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_bonus.h"
-#include <stdio.h>
+
 void	check_zero(t_flag *flags, int *cnt)
 {
-		if (flags->zero == 1)
-			ft_putchar('0', cnt);
-		else
-			ft_putchar(' ', cnt);
+	if (flags->zero == 1)
+		ft_putchar('0', cnt);
+	else
+		ft_putchar(' ', cnt);
 }
 
 void	put_str(char *str, t_flag *flags, int *cnt, int len)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (len > flags->pre && flags->pre != -1)
@@ -44,6 +44,7 @@ void	put_str_width(t_flag *flags, int *cnt, int len)
 		while (i++ < flags->width - len)
 			check_zero(flags, cnt);
 }
+
 void	print_str(char *str, t_flag *flags, int *cnt)
 {
 	int	str_len;
