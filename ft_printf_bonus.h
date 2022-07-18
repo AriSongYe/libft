@@ -6,7 +6,7 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:24:33 by yecsong           #+#    #+#             */
-/*   Updated: 2022/07/13 15:23:02 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/07/18 12:18:34 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ int		ft_printf(const char *format, ...);
 int		parse_format(va_list ap, const char *format, int *cnt);
 int		ft_nbrlen(unsigned long long num, t_flag *flags);
 int		put_pre_str(unsigned long long num, t_flag *flags, char **str);
+int		put_space(t_flag *flags, char **str);
+int		pre_0x(t_flag *flags, char **str, unsigned long long num);
 void	print_type(va_list ap, t_flag *flags, int *cnt);
+void	put_pre_str2(unsigned long long num, t_flag *flags, char **str, int t);
 void	check_flag(char sign, t_flag *flags);
 void	check_zero(t_flag *flags, int *cnt);
 void	ft_putchar(char c, int *cnt);
@@ -55,6 +58,6 @@ void	init_flags(t_flag *flags);
 void	print_num(t_flag *flags, int *cnt, unsigned long long num);
 void	put_sign(t_flag *flags, int *cnt);
 void	put_blank_zero(int num, char type, int *cnt, t_flag *flags);
-int	put_space(t_flag *flags, char **str);
 char	*ft_baseset(t_flag *flags);
+char	*ft_my_strjoin(char *s1, char *s2, int target_free);
 #endif

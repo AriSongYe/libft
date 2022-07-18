@@ -6,24 +6,11 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 15:43:20 by yecsong           #+#    #+#             */
-/*   Updated: 2022/07/15 11:43:28 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/07/18 12:17:46 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_bonus.h"
-
-int	pre_0x(t_flag *flags, char **str, unsigned long long num)
-{
-	if (num == 0 && (flags->type == 'x' || flags->type =='X'))
-		return (0);
-	if (flags->type == 'x' || flags->type == 'p')
-		(*str) = ft_strjoin ("0x", (*str), 2);
-	else if (flags->type =='X')
-		(*str) = ft_strjoin ("0X", (*str), 2);
-	if (!(*str))
-		return (-1);
-	return (0);
-}
 
 int	put_pre_str(unsigned long long num, t_flag *flags, char **str)
 {
@@ -42,21 +29,13 @@ int	put_pre_str(unsigned long long num, t_flag *flags, char **str)
 	(*str)[temp] = '\0';
 	i = 0;
 	while (len + i < temp)
-	{
-		(*str)[i] = '0';
-		i++;
-	}
+		(*str)[i++] = '0';
 	i = 1;
 	if (num == 0 && flags->pre != 0)
 		(*str)[temp - i] = '0';
-	if (num == 0 && flags->pre == 0)
+	else if (num == 0 && flags->pre == 0)
 		(*str)[0] = '\0';
-	while (num)
-	{
-		(*str)[temp - i] = ft_baseset(flags)[num % flags->nbr_base];
-		num /= flags->nbr_base;
-		i++;
-	}
+	put_pre_str2(num, flags, str, temp);
 	return (len);
 }
 
@@ -64,17 +43,17 @@ int	put_num_sign_1(t_flag *flags, char **str)
 {
 	if (flags->nbr_sign == -1 && flags->zero == 1 && flags->pre > 0)
 	{
-			(*str) = ft_strjoin("-", (*str), 2);
+			(*str) = ft_my_strjoin("-", (*str), 2);
 			flags->width += 1;
 	}
 	if (flags->nbr_sign == -1 && flags->zero == 0)
-		if(flags->type == 'd' || flags->type == 'i')
-			(*str) = ft_strjoin("-", (*str), 2);
+		if (flags->type == 'd' || flags->type == 'i')
+			(*str) = ft_my_strjoin("-", (*str), 2);
 	if (flags->nbr_sign == 0 && flags->plus == 1 && flags->zero == 0)
 	{
-		(*str) = ft_strjoin("+", (*str), 2);
+		(*str) = ft_my_strjoin("+", (*str), 2);
 	}
-	if(!(*str))
+	if (!(*str))
 		return (-1);
 	return (0);
 }
@@ -84,21 +63,22 @@ int	put_num_sign_2(t_flag *flags, char **str)
 	if (flags->nbr_sign == -1 && flags->zero == 1)
 	{
 		if (ft_strlen(*str) >= flags->width && flags-> pre <= 0)
-			(*str) = ft_strjoin("-", (*str), 2);
+			(*str) = ft_my_strjoin("-", (*str), 2);
 		else if (ft_strlen(*str) < flags->width && flags->pre <= 0)
 			(*str)[0] = '-';
 	}
 	else if (flags->nbr_sign == 0 && flags->plus == 1 && flags->zero == 1)
 	{
 		if (ft_strlen(*str) > flags->width && flags->pre <= 0)
-			(*str) = ft_strjoin("+", (*str), 2);
+			(*str) = ft_my_strjoin("+", (*str), 2);
 		else if (ft_strlen(*str) < flags->width && flags->pre <= 0)
 			(*str)[0] = '+';
 	}
-	if(!(*str))
+	if (!(*str))
 		return (-1);
 	return (0);
 }
+
 int	put_width(t_flag *flags, char **str)
 {
 	char	*width;
@@ -109,8 +89,8 @@ int	put_width(t_flag *flags, char **str)
 		flags->width -= 1;
 	if (flags->width <= ft_strlen(*str))
 		return (1);
-	width = (char *)malloc(sizeof(char)* flags->width - ft_strlen(*str) + 1);
-	if(!width)
+	width = (char *)malloc(sizeof(char) * flags->width - ft_strlen(*str) + 1);
+	if (!width)
 		return (-1);
 	while (i < flags->width - ft_strlen(*str))
 	{
@@ -122,11 +102,12 @@ int	put_width(t_flag *flags, char **str)
 	}
 	width[i] = '\0';
 	if (flags->minus == 1)
-		(*str) = ft_strjoin((*str), width, 3);
+		(*str) = ft_my_strjoin((*str), width, 3);
 	else
-		(*str) = ft_strjoin(width, (*str), 3);
+		(*str) = ft_my_strjoin(width, (*str), 3);
 	return (1);
 }
+
 void	print_nbr(unsigned long long num, t_flag *flags, int *cnt)
 {
 	char	*str;
@@ -145,6 +126,6 @@ void	print_nbr(unsigned long long num, t_flag *flags, int *cnt)
 	put_width(flags, &str);
 	put_num_sign_2(flags, &str);
 	put_space(flags, &str);
-	ft_putstr(str ,cnt);
+	ft_putstr(str, cnt);
 	free(str);
 }
