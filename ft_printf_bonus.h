@@ -6,7 +6,7 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:24:33 by yecsong           #+#    #+#             */
-/*   Updated: 2022/07/18 12:18:34 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/07/18 12:21:58 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ void	ft_putchar(char c, int *cnt);
 void	ft_putstr(char *s, int *cnt);
 void	print_char(int c, t_flag *flags, int *cnt);
 void	print_str(char *str, t_flag *flags, int *cnt);
-void	print_recur_num_u(t_flag *flags, int *cnt, unsigned int num);
-void	print_recur_num(t_flag *flags, int *cnt, unsigned long long num);
 void	print_nbr(unsigned long long num, t_flag *flag, int *cnt);
 void	put_str(char *str, t_flag *flags, int *cnt, int len);
 void	put_str_width(t_flag *flags, int *cnt, int len);
