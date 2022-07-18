@@ -6,7 +6,7 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 21:24:33 by yecsong           #+#    #+#             */
-/*   Updated: 2022/07/18 12:21:58 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/07/18 12:59:37 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,8 @@ void	print_str(char *str, t_flag *flags, int *cnt);
 void	print_nbr(unsigned long long num, t_flag *flag, int *cnt);
 void	put_str(char *str, t_flag *flags, int *cnt, int len);
 void	put_str_width(t_flag *flags, int *cnt, int len);
-void	put_right(t_flag *flags, int *cnt, int nbr_len, unsigned long long num);
-void	put_left(t_flag *flags, int *cnt, int nbr_len, unsigned long long num);
 void	init_flags(t_flag *flags);
 void	print_num(t_flag *flags, int *cnt, unsigned long long num);
-void	put_sign(t_flag *flags, int *cnt);
-void	put_blank_zero(int num, char type, int *cnt, t_flag *flags);
 char	*ft_baseset(t_flag *flags);
 char	*ft_my_strjoin(char *s1, char *s2, int target_free);
 #endif
