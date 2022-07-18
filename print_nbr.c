@@ -6,96 +6,131 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 15:43:20 by yecsong           #+#    #+#             */
-/*   Updated: 2022/07/12 14:48:08 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/07/15 11:43:28 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_bonus.h"
 
-void	print_num(t_flag *flags, int *cnt, unsigned long long num)
+int	pre_0x(t_flag *flags, char **str, unsigned long long num)
 {
-	if (num == 0)
-	{
-		ft_putchar('0', cnt);
-		return ;
-	}
-	else if (flags->type == 'u' || flags->type == 'X' || flags->type == 'x')
-		print_recur_num_u(flags, cnt, num);
+	if (num == 0 && (flags->type == 'x' || flags->type =='X'))
+		return (0);
+	if (flags->type == 'x' || flags->type == 'p')
+		(*str) = ft_strjoin ("0x", (*str), 2);
+	else if (flags->type =='X')
+		(*str) = ft_strjoin ("0X", (*str), 2);
+	if (!(*str))
+		return (-1);
+	return (0);
+}
+
+int	put_pre_str(unsigned long long num, t_flag *flags, char **str)
+{
+	int	len;
+	int	temp;
+	int	i;
+
+	len = ft_nbrlen(num, flags);
+	if (flags->pre > len)
+		temp = flags->pre;
 	else
-		print_recur_num(flags, cnt, num);
+		temp = len;
+	(*str) = (char *)malloc(sizeof(char) * temp + 1);
+	if (!(*str))
+		return (-1);
+	(*str)[temp] = '\0';
+	i = 0;
+	while (len + i < temp)
+	{
+		(*str)[i] = '0';
+		i++;
+	}
+	i = 1;
+	if (num == 0 && flags->pre != 0)
+		(*str)[temp - i] = '0';
+	if (num == 0 && flags->pre == 0)
+		(*str)[0] = '\0';
+	while (num)
+	{
+		(*str)[temp - i] = ft_baseset(flags)[num % flags->nbr_base];
+		num /= flags->nbr_base;
+		i++;
+	}
+	return (len);
 }
 
-void	pre_0x(t_flag *flags, int *cnt, unsigned long long num)
+int	put_num_sign_1(t_flag *flags, char **str)
 {
-	if (flags->type == 'p')
+	if (flags->nbr_sign == -1 && flags->zero == 1 && flags->pre > 0)
 	{
-		ft_putstr("0x", cnt);
-		flags->width -= 2;
+			(*str) = ft_strjoin("-", (*str), 2);
+			flags->width += 1;
 	}
-	else if (flags->pound == 1 && flags->type == 'x' && num != 0)
+	if (flags->nbr_sign == -1 && flags->zero == 0)
+		if(flags->type == 'd' || flags->type == 'i')
+			(*str) = ft_strjoin("-", (*str), 2);
+	if (flags->nbr_sign == 0 && flags->plus == 1 && flags->zero == 0)
 	{
-		ft_putstr("0x", cnt);
-		flags->width -= 2;
+		(*str) = ft_strjoin("+", (*str), 2);
 	}
-	else if (flags->pound == 1 && flags->type == 'X' && num != 0)
-	{
-		ft_putstr("0X", cnt);
-		flags->width -= 2;
-	}
+	if(!(*str))
+		return (-1);
+	return (0);
 }
 
-void	put_left(t_flag *flags, int *cnt, int nbr_len, unsigned long long num)
+int	put_num_sign_2(t_flag *flags, char **str)
 {
-	if (flags->minus != 1)
-		return ;
-	if (flags->pre == -1)
-		flags->pre = 0;
-	if (flags->pre >= flags->width)
-	{	
-		put_sign(flags, cnt);
-		put_blank_zero(flags->pre - nbr_len, '0', cnt, flags);
-	}
-	else if (flags->width > flags->pre)
+	if (flags->nbr_sign == -1 && flags->zero == 1)
 	{
-		if (flags->nbr_sign == -1 || flags->plus == 1)
-			flags->width--;
-		put_sign(flags, cnt);
-		put_blank_zero(flags->pre - nbr_len, '0', cnt, flags);
+		if (ft_strlen(*str) >= flags->width && flags-> pre <= 0)
+			(*str) = ft_strjoin("-", (*str), 2);
+		else if (ft_strlen(*str) < flags->width && flags->pre <= 0)
+			(*str)[0] = '-';
 	}
-	pre_0x(flags, cnt, num);
-	print_num(flags, cnt, num);
-	if (flags->pre < nbr_len)
-		flags->pre = nbr_len;
-	put_blank_zero(flags->width - nbr_len, ' ', cnt, flags);
+	else if (flags->nbr_sign == 0 && flags->plus == 1 && flags->zero == 1)
+	{
+		if (ft_strlen(*str) > flags->width && flags->pre <= 0)
+			(*str) = ft_strjoin("+", (*str), 2);
+		else if (ft_strlen(*str) < flags->width && flags->pre <= 0)
+			(*str)[0] = '+';
+	}
+	if(!(*str))
+		return (-1);
+	return (0);
 }
-
-void	put_right(t_flag *flags, int *cnt, int nbr_len, unsigned long long num)
+int	put_width(t_flag *flags, char **str)
 {
-	if (flags->minus != 0)
-		return ;
-	if (flags->pre == -1)
-		flags->pre = 0;
-	if (flags->nbr_sign == -1)
-		flags->width--;
-	if (flags->zero == 1)
-		put_sign(flags, cnt);
-	if (flags->pre >= nbr_len)
-		put_blank_zero(flags->width - flags->pre, ' ', cnt, flags);
+	char	*width;
+	int		i;
+
+	i = 0;
+	if (flags->zero == 1 && flags->nbr_sign == -1)
+		flags->width -= 1;
+	if (flags->width <= ft_strlen(*str))
+		return (1);
+	width = (char *)malloc(sizeof(char)* flags->width - ft_strlen(*str) + 1);
+	if(!width)
+		return (-1);
+	while (i < flags->width - ft_strlen(*str))
+	{
+		if (flags->zero == 1 && flags->pre < 0)
+			width[i] = '0';
+		else
+			width[i] = ' ';
+		i++;
+	}
+	width[i] = '\0';
+	if (flags->minus == 1)
+		(*str) = ft_strjoin((*str), width, 3);
 	else
-		put_blank_zero(flags->width - nbr_len, ' ', cnt, flags);
-	if (flags->zero == 0)
-		put_sign(flags, cnt);
-	put_blank_zero(flags->pre - nbr_len, '0', cnt, flags);
-	pre_0x(flags, cnt, num);
-	print_num(flags, cnt, num);
+		(*str) = ft_strjoin(width, (*str), 3);
+	return (1);
 }
-
 void	print_nbr(unsigned long long num, t_flag *flags, int *cnt)
 {
-	int	nbr_len;
+	char	*str;
 
-	if (num == 0 && flags->pre == 0)
-		return ;
 	if ((flags->type == 'd' || flags-> type == 'i') && (int) num < 0)
 	{
 		num = -num;
@@ -103,8 +138,13 @@ void	print_nbr(unsigned long long num, t_flag *flags, int *cnt)
 	}
 	else if (flags->type == 'x' || flags->type == 'X' || flags->type == 'p')
 		flags->nbr_base = 16;
-	nbr_len = ft_nbrlen(num, flags);
-	put_space(flags, cnt);
-	put_left(flags, cnt, nbr_len, num);
-	put_right(flags, cnt, nbr_len, num);
+	put_pre_str(num, flags, &str);
+	put_num_sign_1(flags, &str);
+	if (flags->type == 'p' || flags->pound == 1)
+		pre_0x(flags, &str, num);
+	put_width(flags, &str);
+	put_num_sign_2(flags, &str);
+	put_space(flags, &str);
+	ft_putstr(str ,cnt);
+	free(str);
 }

@@ -6,7 +6,7 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 14:03:44 by yecsong           #+#    #+#             */
-/*   Updated: 2022/07/12 12:21:20 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/07/18 11:31:35 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <limits.h>
 
 int main()
-{
+{/*
 	ft_printf("\n\n//// type 's' ////\n\n");
 	ft_printf(NULL);
 	ft_printf("%-03%\n");
@@ -150,5 +150,10 @@ int main()
 	ft_printf("%7.3p\n", 123123);
 	ft_printf("%-10.3p\n", 0);
 	ft_printf("%09p\n", INT_MAX);
-	ft_printf("%#8.5p\n", INT_MIN);
+	ft_printf("%#8.5p\n", INT_MIN);*/
+	int a;
+	int b;
+	a = 1;
+	b = 1;
+	printf("%.0d\n", 0);
 }

@@ -6,7 +6,7 @@
 /*   By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 14:08:17 by yecsong           #+#    #+#             */
-/*   Updated: 2022/07/12 14:58:34 by yecsong          ###   ########.fr       */
+/*   Updated: 2022/07/18 11:19:37 by yecsong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,15 @@ void	put_str(char *str, t_flag *flags, int *cnt, int len)
 void	put_str_width(t_flag *flags, int *cnt, int len)
 {
 	int	i;
+	int	temp;
 
 	i = 0;
+	if (len > flags->pre)
+		temp = flags->pre;
+	else
+		temp = len;
 	if (flags->pre != -1 && len > flags->pre)
-		while (i++ < flags->width - len - flags->pre)
+		while (i++ < flags->width - temp)
 			check_zero(flags, cnt);
 	else if (flags->pre == -1 || flags->pre >= len)
 		while (i++ < flags->width - len)
@@ -49,7 +54,9 @@ void	print_str(char *str, t_flag *flags, int *cnt)
 {
 	int	str_len;
 
-	if (flags->pre == 0)
+	if (!str)
+		str = "(null)";
+	if (flags->pre == 0 && flags->width == 0)
 		return ;
 	str_len = ft_strlen(str);
 	if (flags->minus == 1)

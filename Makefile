@@ -6,7 +6,7 @@
 #    By: yecsong <yecsong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/16 14:46:07 by yecsong           #+#    #+#              #
-#    Updated: 2022/07/12 15:04:26 by yecsong          ###   ########.fr        #
+#    Updated: 2022/07/12 15:28:11 by yecsong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,16 @@ SRCS_BONUS :=	ft_printf_bonus.c\
 				print_nbr2.c\
 				
 
-OBJS = $(SRCS: %.c=%.0)
+OBJS = $(SRCS:%.c=%.o)
 
 OBJS_BONUS = $(SRCS_BONUS:%.c=%.o)
+
+
+ifdef BONUS_CHECK
+OBJS_FILES = $(OBJS_BONUS)
+else
+OBJS_FILES = $(OBJS)
+endif
 
 AR := ar
 
@@ -37,10 +44,11 @@ CFLAGS := -Werror -Wextra -Wall
 
 all : $(NAME)
 
-$(NAME) : $(OBJS)
+
+$(NAME) : $(OBJS_FILES)
 		$(MAKE) -C ./libft all
 		cp ./libft/libft.a ./$(NAME)
-		$(AR) $(ARFLAGS) $(NAME) $(OBJS_BONUS)
+		$(AR) $(ARFLAGS) $(NAME) $(OBJS_FILES)
 
 re : fclean all
 
@@ -52,9 +60,7 @@ fclean : clean
 	rm -f $(NAME)
 	rm -f libft/libft.a
 
-bonus : $(OBJS_BONUS)
-		$(MAKE) -C ./libft all
-		cp ./libft/libft.a ./$(NAME)
-		$(AR) $(ARFLAGS) $(NAME) $(OBJS_BONUS)
+bonus :
+	@make BONUS_CHECK=1 all
 
 .PHONY : all clean fclean bonus re
